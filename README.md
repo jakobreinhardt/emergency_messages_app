@@ -14,7 +14,7 @@ An app that categorizes disaster response messages.
 
 ## Installation <a name="installation"></a>
 
-Use Python versions 3.8 or higher
+Use Python versions 3.8.8 or higher
 
 
 
