@@ -33,7 +33,7 @@ Folder: data:
 
 Folder: models:
 
-- 
+- train_classifier.py :
 
 - 
 
@@ -43,5 +43,7 @@ Folder: models:
 
 Resources that helped my in the creation of the project:
 
-- 
+- https://stackoverflow.com/questions/70797/how-to-prompt-for-user-input-and-read-command-line-arguments
+
+- https://stackoverflow.com/questions/19124304/what-does-metavar-and-action-mean-in-argparse-in-python
 
