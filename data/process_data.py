@@ -4,19 +4,19 @@ import argparse
 from sqlalchemy import create_engine
 
 
-parser = argparse.ArgumentParser(description='Read data.')
-
-parser.add_argument('messages_filepath', action='store', 
-                    metavar="['/path/to/messages_data_file.csv']",
-                    help='Type the path and name of the file with messages')
-parser.add_argument('categories_filepath', action='store', 
-                    metavar="['/path/to/categories_data_file.csv']",
-                    help='Type the path and name of the file with categories')
-parser.add_argument('database_filepath', action='store', 
-                    metavar="['/path/to/DisasterResponse.db']",
-                    help='Type the path and name to store the database')
-
-
+def user_input():
+    parser = argparse.ArgumentParser(description='Process user input.')
+    
+    parser.add_argument('messages_filepath', action='store', 
+                        metavar="'filepath",
+                        help='Type the path and name of the file with messages')
+    parser.add_argument('categories_filepath', action='store', 
+                        metavar="'filepath'",
+                        help='Type the path and name of the file with categories')
+    parser.add_argument('database_filepath', action='store', 
+                        metavar="'database path'",
+                        help='Type the path and name to store the database')
+    return parser
 
 def load_data(messages_filepath, categories_filepath):
     messages = pd.read_csv(messages_filepath)
@@ -74,6 +74,8 @@ def save_data(df, database_filename):
 
 def main():
     if len(sys.argv) == 4:
+        
+        parser = user_input()
 
         args = parser.parse_args()
 
