@@ -24,18 +24,20 @@ Use Python versions 3.8 or higher
 Folder: data:
 
 - process_data.py : 
-
 - 
-
 - 
-
 - 
 
 Folder: models:
 
 - train_classifier.py :
-
 - 
+
+Folder: app:
+
+- run.py
+- go.html
+- master.html
 
 -------------
 
