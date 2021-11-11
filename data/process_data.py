@@ -5,6 +5,14 @@ from sqlalchemy import create_engine
 
 
 def user_input():
+    '''
+    Returns
+    -------
+    parser : TYPE
+        DESCRIPTION.
+
+    '''
+    
     parser = argparse.ArgumentParser(description='Process user input.')
     
     parser.add_argument('messages_filepath', action='store', 
@@ -19,12 +27,42 @@ def user_input():
     return parser
 
 def load_data(messages_filepath, categories_filepath):
+    '''
+    
+
+    Parameters
+    ----------
+    messages_filepath : TYPE
+        DESCRIPTION.
+    categories_filepath : TYPE
+        DESCRIPTION.
+
+    Returns
+    -------
+    df : TYPE
+        DESCRIPTION.
+
+    '''
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath,sep=',')
     df = pd.merge(messages,categories)
     return df
 
 def clean_data(df):
+    '''
+    
+
+    Parameters
+    ----------
+    df : TYPE
+        DESCRIPTION.
+
+    Returns
+    -------
+    df : TYPE
+        DESCRIPTION.
+
+    '''
     # create a dataframe of the 36 individual category columns
     categories = df['categories'].str.split(';', expand = True)
     
@@ -68,11 +106,34 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
+    '''
+    
+
+    Parameters
+    ----------
+    df : TYPE
+        DESCRIPTION.
+    database_filename : TYPE
+        DESCRIPTION.
+
+    Returns
+    -------
+    None.
+
+    '''
     engine = create_engine('sqlite:///{}'.format(database_filename))
     df.to_sql('data', engine, index=False)  
     
 
 def main():
+    '''
+    
+
+    Returns
+    -------
+    None.
+
+    '''
     if len(sys.argv) == 4:
         
         parser = user_input()
