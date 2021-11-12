@@ -9,6 +9,8 @@
 ## Project Description <a name="description"></a>
 
 The result of this project is an app that categorizes disaster response messages. The project is part of the Udacity Data Science Nanodegree.
+The first part is an ETL pipeline that extracts messages that were sent during emergencies and cleans them. Also, a file which includes the caegories that disasters are classified as, is included. These categories are prepared and added to the messages as dummy variables.
+The second parts of the project is a machine learning pipeline.
 
 -------------
 
