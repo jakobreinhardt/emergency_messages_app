@@ -8,7 +8,7 @@
 
 ## Project Description <a name="description"></a>
 
-An app that categorizes disaster response messages.
+The result of this project is an app that categorizes disaster response messages. The project is part of the Udacity Data Science Nanodegree.
 
 -------------
 
