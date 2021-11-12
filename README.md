@@ -24,19 +24,19 @@ Use Python versions 3.8.8 or higher
 -------------
 ## File Descriptions <a name="files"></a>
 
-Folder: data:
+data:
 
 - process_data.py : ETL pipeline that extracts messages that were sent during emergencies
 - disaster_messages.csv : file with the raw messages
 - disaster_categories.csv : file with the raw categories
 - Database.db : SQLite database with the messages and prepared dummy variables of categories
 
-Folder: models:
+models:
 
 - train_classifier.py :
 - 
 
-Folder: app:
+app:
 
 - run.py
 - go.html
