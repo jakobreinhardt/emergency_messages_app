@@ -6,10 +6,12 @@ from sqlalchemy import create_engine
 
 def user_input():
     '''
+    This function establishes a fileparser to process user input
+    
     Returns
     -------
-    parser : TYPE
-        DESCRIPTION.
+    parser : user inout for the three variables 'message_filepath',
+    'categories_filepath', 'database_filepath'
 
     '''
     
@@ -28,7 +30,7 @@ def user_input():
 
 def load_data(messages_filepath, categories_filepath):
     '''
-    
+    This function
 
     Parameters
     ----------
