@@ -13,10 +13,7 @@ from sklearn.model_selection import train_test_split, RepeatedKFold, GridSearchC
 from sklearn.multioutput import MultiOutputClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import TfidfTransformer, CountVectorizer
-from sklearn.compose import ColumnTransformer
 from sklearn.metrics import classification_report
-from sklearn.linear_model import LogisticRegression
-from sklearn.naive_bayes import MultinomialNB
 from sklearn.svm import LinearSVC
 
 
@@ -31,13 +28,13 @@ parser = argparse.ArgumentParser(description='Processes the user input.')
 parser.add_argument(
     'database_filepath',
     action='store',
-    metavar='["/path/to/database.db"]',
+    metavar='filepath',
     help='Provide the location of the database')
 
 parser.add_argument(
     'model_filepath',
     action='store',
-    metavar='["/path/to/model"]',
+    metavar='filepath',
     help='Provide the destination of the produced pickle file')
 
 rm = set(stopwords.words('english'))
@@ -88,21 +85,10 @@ def tokenize(text):
 
 
 
-text_transformer = Pipeline([
-    ('vecttext', CountVectorizer(tokenizer=tokenize)),
-    ('tfidf', TfidfTransformer())
-])
-
-preprocessor = ColumnTransformer(
-    [('text', text_transformer, 'message')], remainder='passthrough')
-
-
-
 def build_model():
     '''
-    Runs a machine learning pipeline consisting of preprocessing and Random
-    Forest Classifier
-    Gridsearch includes LinearSVC, LogisticRegression, MultinomialNB
+    Runs a machine learning pipeline
+    Gridsearch includes RandomForestClassifier, LinearSVC
 
     Returns
     -------
@@ -110,51 +96,32 @@ def build_model():
     '''
 
     pipeline = Pipeline([
-        ('preprocessor', preprocessor),
-        ('clf', RandomForestClassifier())
+        ('vect', CountVectorizer(tokenizer=tokenize)),
+        ('tfidf', TfidfTransformer()),
+        ('clf', MultiOutputClassifier(RandomForestClassifier()))
     ])
-
+    
     parameters = [
-        {'clf': [RandomForestClassifier()],
-         'clf__n_estimators': [5, 50, 100, 250],
-         'clf__max_depth': [5, 8, 10],
-         'preprocessor__text__vecttext__max_df': [0.5, 0.75, 1.0],
-         'preprocessor__text__vecttext__ngram_range': [(1, 1), (1, 2)],
-         'clf__random_state':[42]
-         },
-        {'clf': [MultiOutputClassifier(LinearSVC())],
-         'clf__estimator__C': [1.0, 10.0, 100.0, 1000.0],
-         'clf__estimator__max_iter': [5000],
-         'preprocessor__text__vecttext__max_df': [0.5, 0.75, 1.0],
-         'preprocessor__text__vecttext__ngram_range': [(1, 1), (1, 2)],
-         'clf__estimator__random_state': [42]
-         },
-        {'clf': [MultiOutputClassifier(LogisticRegression())],
-         'clf__estimator__penalty': ['l1', 'l2'],
-         'clf__estimator__C': [0.01, 0.1, 1, 10, 100],
-         'preprocessor__text__vecttext__max_df': [0.5, 0.75, 1.0],
-         'preprocessor__text__vecttext__ngram_range': [(1, 1), (1, 2)],
-         'clf__estimator__random_state': [42]
-         },
-        {'clf': [MultiOutputClassifier(MultinomialNB())],
-         'preprocessor__text__vecttext__max_df': [0.5, 0.75, 1.0],
-         'preprocessor__text__vecttext__ngram_range': [(1, 1), (1, 2)]
-         }
-
+        {"clf": [RandomForestClassifier()],
+         "clf__n_estimators": [10, 100, 250],
+         "clf__max_depth":[8],
+         "clf__random_state":[30]},
+        {"clf": [LinearSVC()],
+         "clf__C": [1.0, 10.0, 100.0, 1000.0],
+         "clf__random_state":[30]}
     ]
-
+    
     rkf = RepeatedKFold(
-        n_splits=3,
+        n_splits=10,
         n_repeats=2,
-        random_state=42
+        random_state=30
     )
-
+    
     cv = GridSearchCV(
         pipeline,
         parameters,
         cv=rkf,
-        scoring=['f1_weighted', 'f1_micro', 'f1_samples'],
-        refit='f1_weighted',
+        scoring='accuracy',
         n_jobs=-1)
 
     return cv
@@ -177,7 +144,7 @@ def evaluate_model(model, X, Y):
     '''
     
     df = pd.DataFrame.from_dict(model.cv_results_)
-    print('Cross-validation results')
+    print('Results')
     print('Best score:{}'.format(model.best_score_))
     print('Best parameters set:{}'.format(
         model.best_estimator_.get_params()['clf']))

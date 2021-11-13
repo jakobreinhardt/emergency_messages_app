@@ -160,7 +160,7 @@ def main():
         database_filepath = args.database_filepath
 
         
-        print('Loading data...\n    MESSAGES: {}\n    CATEGORIES: {}'
+        print('Loading data...\n    messages: {}\n    categories: {}'
               .format(messages_filepath, categories_filepath))
         df = load_data(messages_filepath, categories_filepath)
 
@@ -168,10 +168,10 @@ def main():
         df = clean_data(df)
         df = feature_creation(df)
         
-        print('Saving data...\n    DATABASE: {}'.format(database_filepath))
+        print('Saving data...\n    database: {}'.format(database_filepath))
         save_data(df, database_filepath)
         
-        print('Cleaned data saved to database!')
+        print('Cleaned data is saved to the database')
     
     else:
         print('Please provide the filepaths of the messages and categories '\
