@@ -15,7 +15,7 @@ Example: python process_data.py disaster_messages.csv disaster_categories.csv Di
 
 The second parts of the project is a machine learning pipeline. First the messages are prepared for machine learning using natural language processing techniques. Then a machine learning pipeline is run.
 
-The third part of the project is a web app, that a user can give input to and receive a categorization of the message he put in.
+The third part of the project is a web app, that a user can give input to and receive a categorization of the message he/she put in.
 
 -------------
 
@@ -37,8 +37,8 @@ data:
 
 models:
 
-- train_classifier.py :
-- 
+- train_classifier.py : Machine Learning pipeline
+- model.pkl Pickle file of the model
 
 app:
 
@@ -54,5 +54,4 @@ Resources that helped my in the creation of the project:
 
 - https://stackoverflow.com/questions/70797/how-to-prompt-for-user-input-and-read-command-line-arguments
 
-- https://stackoverflow.com/questions/19124304/what-does-metavar-and-action-mean-in-argparse-in-python
 
