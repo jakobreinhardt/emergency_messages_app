@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import sys
 import argparse
 from sqlalchemy import create_engine
@@ -6,11 +7,11 @@ from sqlalchemy import create_engine
 
 def user_input():
     '''
-    This function establishes a fileparser to process user input
+    This function establishes a fileparser to process user input.
     
     Returns
     -------
-    parser : user inout for the three variables 'message_filepath',
+    parser : user input for the three variables 'message_filepath',
     'categories_filepath', 'database_filepath'
 
     '''
@@ -30,19 +31,17 @@ def user_input():
 
 def load_data(messages_filepath, categories_filepath):
     '''
-    This function
+    This function loads messages from a message file and
+    categories from a category file. It merges the files together
 
     Parameters
     ----------
-    messages_filepath : TYPE
-        DESCRIPTION.
-    categories_filepath : TYPE
-        DESCRIPTION.
+    messages_filepath
+    categories_filepath
 
     Returns
     -------
-    df : TYPE
-        DESCRIPTION.
+    df : merged dataframe
 
     '''
     messages = pd.read_csv(messages_filepath)
@@ -52,17 +51,15 @@ def load_data(messages_filepath, categories_filepath):
 
 def clean_data(df):
     '''
-    
+    This function cleans data
 
     Parameters
     ----------
-    df : TYPE
-        DESCRIPTION.
+    df : raw dataframe
 
     Returns
     -------
-    df : TYPE
-        DESCRIPTION.
+    df : cleaned dataframe
 
     '''
     # create a dataframe of the 36 individual category columns
@@ -74,10 +71,8 @@ def clean_data(df):
     # use this row to extract a list of new column names for categories.
     # one way is to apply a lambda function that takes everything 
     # up to the second to last character of each string with slicing
-    
     category_colnames=[]
     for word in row.iteritems(): category_colnames.append(word[1].rpartition('-')[0])
-    print(category_colnames)
     
     # rename the columns of `categories`
     categories.columns = category_colnames    
@@ -97,6 +92,10 @@ def clean_data(df):
     # concatenate the original dataframe with the new `categories` dataframe
     df = pd.concat([df, categories], axis = 1)
     
+    # remove NaNs
+    df.dropna(how = 'all', axis = 1, inplace = True)
+    df.dropna(how = 'all', axis = 0, inplace = True)
+    
     # check number of duplicates
     df.duplicated().sum()
     # drop duplicates
@@ -109,14 +108,12 @@ def clean_data(df):
 
 def save_data(df, database_filename):
     '''
-    
+    Dataframe is saved to an SQLite database
 
     Parameters
     ----------
-    df : TYPE
-        DESCRIPTION.
-    database_filename : TYPE
-        DESCRIPTION.
+    df : cleaned dataframe
+    database_filename
 
     Returns
     -------
@@ -126,11 +123,27 @@ def save_data(df, database_filename):
     engine = create_engine('sqlite:///{}'.format(database_filename))
     df.to_sql('data', engine, index=False)  
     
+def feature_creation(df):
+    '''
+    creates a new feature length of message
+
+    Parameters
+    ----------
+    df
+
+    Returns
+    -------
+    df : with new feature
+
+    '''
+    
+    df['len'] = df['message'].apply(len)
+    return df
 
 def main():
     '''
+    This main function reads user input and provides help to the user
     
-
     Returns
     -------
     None.
@@ -153,6 +166,7 @@ def main():
 
         print('Cleaning data...')
         df = clean_data(df)
+        df = feature_creation(df)
         
         print('Saving data...\n    DATABASE: {}'.format(database_filepath))
         save_data(df, database_filepath)
