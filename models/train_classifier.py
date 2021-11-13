@@ -26,7 +26,7 @@ nltk.download('maxent_ne_chunker')
 nltk.download('wordnet')
 
 
-parser = argparse.ArgumentParser(description='Processes the data.')
+parser = argparse.ArgumentParser(description='Processes the user input.')
 
 parser.add_argument(
     'database_filepath',
@@ -60,8 +60,7 @@ def load_data(database_filepath):
     engine = create_engine('sqlite:///{}'.format(database_filepath))
     df = pd.read_sql_table('data', engine)
     X = df[['message']]
-    Y = df.drop(['id', 'message', 'original', 'len',
-             'genre_news', 'genre_social'], axis=1)
+    Y = df.drop(['id', 'message', 'original', 'len'], axis=1)
     category_names = Y.columns
     return X, Y, category_names
 
@@ -245,7 +244,7 @@ def main():
         print('Please provide the filepath of the disaster messages database '\
               'as the first argument and the filepath of the pickle file to '\
               'save the model to as the second argument. \n\nExample: python '\
-              'train_classifier.py ../data/DisasterResponse.db classifier.pkl')
+              'train_classifier.py ../data/DisasterResponse.db model.pkl')
 
 
 if __name__ == '__main__':
