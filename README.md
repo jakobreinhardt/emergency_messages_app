@@ -46,12 +46,4 @@ app:
 - go.html
 - master.html
 
--------------
-
-## Credits <a name="credits"></a>
-
-Resources that helped my in the creation of the project:
-
-- https://stackoverflow.com/questions/70797/how-to-prompt-for-user-input-and-read-command-line-arguments
-
 
