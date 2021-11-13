@@ -103,6 +103,9 @@ def clean_data(df):
     # check number of duplicates
     df.duplicated().sum()
     
+    # drop rows that are completely empty
+    df.dropna(how = 'all', axis = 0, inplace=True)
+    
     return df
 
 
