@@ -10,8 +10,7 @@
 ## Project Description <a name="description"></a>
 
 The result of this project is an app that categorizes disaster response messages. 
-Personell working on distaster relief must get knowledge of the amount of specific needs such as food or medical aid and 
-also be provided the location of origin in order to best organize their help. 
+Personell working on distaster relief must get knowledge of the amount of specific needs such as food or medical aid in order to best organize their help. 
 Categories of emergenvy messages can be something like - medical help - or - shelter -. The project is part of the Udacity Data Science Nanodegree.
 
 The first part is an ETL pipeline that extracts messages that were sent during emergencies and cleans them. Also, a file which includes the categories that disasters are classified as, is included. These categories are prepared and added to the messages as dummy variables. 
