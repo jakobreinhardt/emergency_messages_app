@@ -68,9 +68,8 @@ def clean_data(df):
     # select the first row of the categories dataframe
     row = categories.iloc[0]
     
-    # use this row to extract a list of new column names for categories.
-    # one way is to apply a lambda function that takes everything 
-    # up to the second to last character of each string with slicing
+    # extract a list of new column names for categories.
+    # takes everything up to the second to last character of each string
     category_colnames=[]
     for word in row.iteritems(): category_colnames.append(word[1].rpartition('-')[0])
     
@@ -85,6 +84,10 @@ def clean_data(df):
         i+=1
         # convert column from string to numeric
         categories[column] = pd.to_numeric(categories[column], downcast="integer")
+
+    # convert 2 to 1 in all categories
+    for column in categories:
+        categories[column].replace(2,1, inplace = True)
                 
     # drop the original categories column from `df`
     df = df.drop(columns='categories')
@@ -97,14 +100,16 @@ def clean_data(df):
     df.dropna(how = 'all', axis = 0, inplace = True)
     
     # check number of duplicates
-    df.duplicated().sum()
+    print(df.duplicated().sum(),'duplicates are found.')
     # drop duplicates
     df.drop_duplicates(inplace = True)
     # check number of duplicates
-    df.duplicated().sum()
+    print(df.duplicated().sum(),'duplicates are found after removing duplicates.')
     
     # drop rows that are completely empty
     df.dropna(how = 'all', axis = 0, inplace=True)
+    
+    print('If this line says [1 0] then change of 2 -> 1 worked out:',df.related.unique())
     
     return df
 
