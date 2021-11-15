@@ -1,7 +1,7 @@
 ### Table of Contents
 
 1. [Project Description](#description)
-2. [Hoe To Run](#run)
+2. [How To Run](#run)
 2. [Installation](#installation)
 3. [File Descriptions](#files)
 4. [Credits](#credits)
@@ -21,7 +21,7 @@ The second parts of the project is a machine learning pipeline. First the messag
 The third part of the project is a web app, that a user can give input to and receive a categorization of the message he/she put in. 
 
 -------------
-## Hoe to Run <a name="run"></a>
+## How to Run <a name="run"></a>
 
 Run the ETL pipeline as follows:
 python process_data.py disaster_messages.csv disaster_categories.csv DisasterResponse.db
