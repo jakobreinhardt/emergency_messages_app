@@ -56,8 +56,10 @@ def load_data(database_filepath):
     '''
     engine = create_engine('sqlite:///{}'.format(database_filepath))
     df = pd.read_sql_table('data', engine)
-    X = df[['message']]
-    Y = df.drop(['id', 'message', 'original', 'len'], axis=1)
+    X = df['message']
+    # uncomment to include variable length in predictors
+    #X = df[['message', 'len']]
+    Y = df.drop(['id', 'message', 'original', 'len', 'genre'], axis=1)
     category_names = Y.columns
     return X, Y, category_names
 
@@ -81,7 +83,9 @@ def tokenize(text):
     text = word_tokenize(text)
     text = list(set(text) - rm)
     text = [WordNetLemmatizer().lemmatize(w) for w in text]
+    
     return text
+
 
 
 
@@ -188,10 +192,22 @@ def main():
         database_filepath = args.database_filepath
         model_filepath = args.model_filepath
         
-        print('Loading data...\n    DATABASE: {}'.format(database_filepath))
+        print('Loading data...\n    database: {}'.format(database_filepath))
         X, Y, category_names = load_data(database_filepath)
+        
+
         X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2,
-                                                            random_state=42)
+                                                            random_state=30)
+        
+        # Testoutputs below
+        print('Shape of X:',X.shape)
+        print('Shape of X_train:',X_train.shape)
+        print('Shape of X_test:',X_test.shape)
+        
+        print('Shape of Y:',Y.shape)
+        print('Shape of Y_train:',Y_train.shape)
+        print('Shape of Y_test:',Y_test.shape)
+        
         
         print('Building model...')
         model = build_model()

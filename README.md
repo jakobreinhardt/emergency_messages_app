@@ -24,13 +24,16 @@ The third part of the project is a web app, that a user can give input to and re
 ## How to Run <a name="run"></a>
 
 Run the ETL pipeline as follows:
-python process_data.py disaster_messages.csv disaster_categories.csv DisasterResponse.db
+1. cd data
+2. python process_data.py disaster_messages.csv disaster_categories.csv DisasterResponse.db
 
 Run the machine learning pipeline as follows: 
-python train_classifier.py ../data/DisasterResponse.db model.pkl
+1. cd models
+2. python train_classifier.py ../data/DisasterResponse.db model.pkl
 
 Run the app: 
-python run.py
+1. cd app
+2. python run.py
 
 -------------
 

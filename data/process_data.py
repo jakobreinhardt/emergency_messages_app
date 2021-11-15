@@ -133,7 +133,7 @@ def save_data(df, database_filename):
     
 def feature_creation(df):
     '''
-    creates a new feature length of message
+    creates a new feature length of message to possibly perform better prdictions
 
     Parameters
     ----------
