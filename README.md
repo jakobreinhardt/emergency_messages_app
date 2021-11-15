@@ -1,6 +1,7 @@
 ### Table of Contents
 
 1. [Project Description](#description)
+2. [Hoe To Run](#run)
 2. [Installation](#installation)
 3. [File Descriptions](#files)
 4. [Credits](#credits)
@@ -8,15 +9,28 @@
 
 ## Project Description <a name="description"></a>
 
-The result of this project is an app that categorizes disaster response messages. Categories are something like - medical help - or - shelter -. The project is part of the Udacity Data Science Nanodegree.
+The result of this project is an app that categorizes disaster response messages. 
+Personell working on distaster relief must get knowledge of the amount of specific needs such as food or medical aid and 
+also be provided the location of origin in order to best organize their help. 
+Categories of emergenvy messages can be something like - medical help - or - shelter -. The project is part of the Udacity Data Science Nanodegree.
 
-The first part is an ETL pipeline that extracts messages that were sent during emergencies and cleans them. Also, a file which includes the categories that disasters are classified as, is included. These categories are prepared and added to the messages as dummy variables. Run the pipeline as follows:
-python process_data.py disaster_messages.csv disaster_categories.csv DisasterResponse.db
+The first part is an ETL pipeline that extracts messages that were sent during emergencies and cleans them. Also, a file which includes the categories that disasters are classified as, is included. These categories are prepared and added to the messages as dummy variables. 
 
 The second parts of the project is a machine learning pipeline. First the messages are prepared for machine learning using natural language processing techniques.
-Run the pipeline as follows: python train_classifier.py ../data/DisasterResponse.db model.pkl
 
-The third part of the project is a web app, that a user can give input to and receive a categorization of the message he/she put in. Run the app: python run.py
+The third part of the project is a web app, that a user can give input to and receive a categorization of the message he/she put in. 
+
+-------------
+## Hoe to Run <a name="run"></a>
+
+Run the ETL pipeline as follows:
+python process_data.py disaster_messages.csv disaster_categories.csv DisasterResponse.db
+
+Run the machine learning pipeline as follows: 
+python train_classifier.py ../data/DisasterResponse.db model.pkl
+
+Run the app: 
+python run.py
 
 -------------
 
@@ -43,8 +57,8 @@ models:
 
 app:
 
-- run.py
-- go.html
-- master.html
+- run.py : executes the webapp
+- go.html : frontend of the webapp
+- master.html : frontend of the webapp
 
 
